@@ -29,8 +29,8 @@ class ChatController extends Controller
         $apiKey = 'DZZguc3SP1scbDPtiuHk0ditTEnh1FKM';
         $msg = $request->message;
         \DB::table('chat')->insert([
-            'name' => '自分',
-            'chat' => $msg,
+            'from_id' => 0,
+            'chats' => $msg,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -43,11 +43,17 @@ class ChatController extends Controller
         $posts = json_decode($posts, true);
 
         \DB::table('chat')->insert([
-            'name' => 'AI',
-            'chat' => $posts['results']['0']['reply'],
+            'from_id' => 1,
+            'chats' => $posts['results']['0']['reply'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
+
+        return redirect('/chat');
+
+    }
+    public function deleteall(){
+        \DB::table('chat')->delete();
 
         return redirect('/chat');
 

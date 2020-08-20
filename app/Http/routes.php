@@ -14,7 +14,8 @@
 //Route::resource('chat', 'ChatController');
 
 Route::get('chat', 'ChatController@index');
+
 Route::post('chat', 'ChatController@store');
 
-
+Route::get('chat/delete' , 'ChatController@deleteall');
 
