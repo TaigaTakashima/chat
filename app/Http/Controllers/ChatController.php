@@ -49,7 +49,7 @@ class ChatController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        return redirect('chat/index');
+        return redirect('/chat');
 
     }
 }
