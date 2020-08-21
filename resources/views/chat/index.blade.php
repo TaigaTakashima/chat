@@ -15,7 +15,7 @@
                 $('#bms_messages').animate({scrollTop:position}, speed, 'swing');
             });
             //テキストエリアでEnter押下時に入力内容をsubmit
-            $('textarea').keypress(function(event){
+            $('textarea').one('keypress',function(event){
                 var keycode = (event.keyCode ? event.keyCode : event.which);//押されたkeyを確認
                 //keycode = 13 = Enterの場合にsubmit
                 if(keycode == '13'){
@@ -32,12 +32,12 @@
 
         <!-- チャットの外側部分 -->
         <div id="bms_messages_container">
-            <!-- ヘッダー部分② -->
+            <!-- ヘッダー部分 -->
             <div id="bms_chat_header">
                 <!--ステータス-->
                 <div id="bms_chat_user_status">
                     <!--ユーザー名-->
-                    <div id="bms_chat_user_name">TalkAPI</div>
+                    <div id="bms_chat_user_name">TalkAPI Chat</div>
                 </div>
                     <!--リセットボタン-->
                     <div id="bms_status_icon">
@@ -63,6 +63,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="send_time">{{ $chat['created_at']->format('n月d日H:i') }}</div>
                 </div>
                 <div class="bms_clear"></div><!-- 回り込みを解除（スタイルはcssで充てる） -->
                 @endif
@@ -77,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="send_time st_right">{{ $chat['created_at']->format('n月d日H:i') }}</div>
                 </div>
                 <div class="bms_clear"></div><!-- 回り込みを解除（スタイルはcssで充てる） -->
                 @endif

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Chat;
-
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 
@@ -61,6 +60,10 @@ class ChatController extends Controller
     public function deleteall(){
         //チャット内容リセット
         \DB::table('chat')->delete();
+
+        //idのオートインクリメントをリセット
+        $sql = "ALTER TABLE chat AUTO_INCREMENT = 1";
+        \DB::unprepared($sql);
 
         //リダイレクト
         return redirect('/chat');
