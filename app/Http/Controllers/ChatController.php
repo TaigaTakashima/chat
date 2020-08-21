@@ -23,11 +23,16 @@ class ChatController extends Controller
     }
     public function store(Request $request)
     {
-        //
-        $url = "https://api.a3rt.recruit-tech.co.jp/talk/v1/smalltalk";
+        $url = "https://api.a3rt.recruit-tech.co.jp/talk/v1/smalltalk";//APIURL
         $method = "POST";
-        $apiKey = 'DZZguc3SP1scbDPtiuHk0ditTEnh1FKM';
-        $msg = $request->message;
+        $apiKey = 'DZZguc3SP1scbDPtiuHk0ditTEnh1FKM';//APIkey
+        $msg = $request->message;//入力内容を取得
+
+        //メッセージが未入力の場合リダイレクト
+        if($msg == ""){
+            return redirect('/chat');
+        }
+        //入力したチャット内容をインサート
         \DB::table('chat')->insert([
             'from_id' => 0,
             'chats' => $msg,
@@ -35,13 +40,13 @@ class ChatController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        //接続
+        //API接続
         $client = new Client();
-
         $response = $client->request($method, $url, ['form_params' => ['apikey' => $apiKey,'query' => $msg]]);
         $posts = $response->getBody();
         $posts = json_decode($posts, true);
 
+        //チャット内容インサート
         \DB::table('chat')->insert([
             'from_id' => 1,
             'chats' => $posts['results']['0']['reply'],
@@ -49,12 +54,15 @@ class ChatController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
+        //chatにリダイレクト
         return redirect('/chat');
 
     }
     public function deleteall(){
+        //チャット内容リセット
         \DB::table('chat')->delete();
 
+        //リダイレクト
         return redirect('/chat');
 
     }
