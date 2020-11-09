@@ -15,7 +15,7 @@
                 $('#bms_messages').animate({scrollTop:position}, speed, 'swing');
             });
             //テキストエリアでEnter押下時に入力内容をsubmit
-            $('textarea').one('keypress',function(event){
+            $('textarea').keypress(function(event){
                 var keycode = (event.keyCode ? event.keyCode : event.which);//押されたkeyを確認
                 //keycode = 13 = Enterの場合にsubmit
                 if(keycode == '13'){
@@ -29,7 +29,6 @@
 
 <body>
     <div id="your_container">
-
         <!-- チャットの外側部分 -->
         <div id="bms_messages_container">
             <!-- ヘッダー部分 -->
@@ -48,10 +47,8 @@
                     </a>
                     </div>
             </div>
-
             <!-- タイムライン部分 -->
             <div id="bms_messages">
-
                 <!--メッセージ１（左側）TalkAPI-->
                 @foreach($chats as $chat)
                 @if($chat['from_id'] == 1)
@@ -67,7 +64,6 @@
                 </div>
                 <div class="bms_clear"></div><!-- 回り込みを解除（スタイルはcssで充てる） -->
                 @endif
-
                 <!--メッセージ２（右側）自分-->
                 @if($chat['from_id'] == 0)
                 <div class="bms_message bms_right">
@@ -84,7 +80,6 @@
                 @endif
                 @endforeach
             </div>
-
             <!-- テキストボックス、送信ボタン -->
             <div id="bms_send">
                 <form action="{{url('/chat')}}" method="POST"id="chatform">
@@ -94,9 +89,7 @@
                         送信
                     </button>
                 </form>
-
             </div>
-
         </div>
     </div>
 </body>
